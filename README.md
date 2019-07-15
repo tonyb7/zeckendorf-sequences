@@ -28,3 +28,4 @@ It seems like the program can only execute reasonably fast (under 20 seconds) on
 
 # Extensions
 If you want to implement this algorithm for higher dimensions or optimize it, feel free to read & edit `zeckendorf.cpp`. It should be clear how to implement this algorithm for 3 or more dimensions -- it would involve more nested vectors, but the idea behind the algorithm is the same.
+
