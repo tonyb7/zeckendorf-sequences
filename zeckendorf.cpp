@@ -31,7 +31,7 @@ int main() {
 void printGrid(const vector<vector<pair<int, set<int>>>> answer) {
 	for (vector<pair<int, set<int>>> vec : answer) {
 		for (pair<int, set<int>> pair : vec) {
-			cout.width(3);
+			cout.width(5);
 			cout << left << pair.first << " ";
 		}
 		cout << "\n";
