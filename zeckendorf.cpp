@@ -97,3 +97,4 @@ int find_smallest_unused_int(unordered_set<int> &forbidden_sums, const int prev_
 	while (forbidden_sums.count(index)) ++index;
 	return index;
 }
+
