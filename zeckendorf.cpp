@@ -1,5 +1,6 @@
 // Zeckendorf thing for Annie Xu
 // It was really fun! - Tony Bai
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <unordered_set>
@@ -7,12 +8,13 @@
 #include <utility>
 
 using namespace std;
+using column = vector<pair<int, set<int>>>;
 
-vector<vector<pair<int, set<int>>>> prepareGrid(const int lim);
-void printGrid(const vector<vector<pair<int, set<int>>>> answer);
-vector<vector<pair<int, set<int>>>> generateGrid(vector<vector<pair<int, set<int>>>> & grid);
+vector<column> prepareGrid(const int lim);
+void printGrid(const vector<column> &answer);
+vector<column> generateGrid(vector<column> & grid);
 pair<int, set<int>> findElementAt(const int i, const int j,
-	vector<vector<pair<int, set<int>>>>  &grid, unordered_set<int> &forbidden_sums, int &prev_elt);
+	vector<column>  &grid, unordered_set<int> &forbidden_sums, int &prev_elt);
 int find_smallest_unused_int(unordered_set<int> &forbidden_sums, const int prev_elt);
 
 int main() {
@@ -20,18 +22,33 @@ int main() {
 	cout << "How many rows do you want to generate? ";
 	cin >> lim;
 
-	vector<vector<pair<int, set<int>>>> answer = prepareGrid(lim);
+	vector<column> answer = prepareGrid(lim);
 	answer = generateGrid(answer);
 	printGrid(answer);
 
 	return 0;
 }
 
+int log10(int n) {
+	if (n < 10) {
+		return 0;
+	}
+
+	return 1 + log10(n / 10);
+}
+
+bool colcmp(const column &c1, const column &c2) {
+	return c1.back() < c2.back();
+}
+
 // Print the grid
-void printGrid(const vector<vector<pair<int, set<int>>>> answer) {
-	for (vector<pair<int, set<int>>> vec : answer) {
-		for (pair<int, set<int>> pair : vec) {
-			cout.width(5);
+void printGrid(const vector<column> &answer) {
+	int greatest = max_element(answer.begin(), answer.end(), colcmp)->back().first;
+	int digits = log10(greatest) + 1;
+
+	for (const column &vec : answer) {
+		for (const pair<int, set<int>> &pair : vec) {
+			cout.width(digits);
 			cout << left << pair.first << " ";
 		}
 		cout << "\n";
@@ -39,19 +56,19 @@ void printGrid(const vector<vector<pair<int, set<int>>>> answer) {
 }
 
 // Initialize grid with right vectors/data structures
-vector<vector<pair<int, set<int>>>> prepareGrid(const int lim) {
-	vector<vector<pair<int, set<int>>>> grid;
+vector<column> prepareGrid(const int lim) {
+	vector<column> grid;
 	for (int i = 0; i < lim; ++i) {
-		vector<pair<int, set<int>>> row;
-		// row.resize(lim);
-		grid.push_back(row);
+		column col;
+		// col.resize(lim);
+		grid.push_back(col);
 	}
 
 	return grid;
 }
 
 // Generate the grid
-vector<vector<pair<int, set<int>>>> generateGrid(vector<vector<pair<int, set<int>>>> & grid) {
+vector<column> generateGrid(vector<column> &grid) {
 	int width = (int) grid.size();
 	unordered_set<int> forbidden_sums;
 	int prev_elt = 0;
@@ -70,7 +87,7 @@ vector<vector<pair<int, set<int>>>> generateGrid(vector<vector<pair<int, set<int
 // Find element at position (i, j). Update forbidden sums. Returns pair, which contains the
 // number at position (i, j) and the new forbidden sums added from that position.
 pair<int, set<int>> findElementAt(const int i, const int j,
-		vector<vector<pair<int, set<int>>>>  &grid, unordered_set<int> &forbidden_sums, int &prev_elt) {
+		vector<column>  &grid, unordered_set<int> &forbidden_sums, int &prev_elt) {
 
 	pair<int, set<int>> pair = make_pair(0, set<int>());
 
