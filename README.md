@@ -11,7 +11,7 @@ Annie asked me to help her develop an algorithm to generate Simple Zeckendorf Se
 
 # How to Run This Program
 1. Download this repository and navigate to it in terminal
-2. Compile the C++ file with `g++ zeckendorf.cpp -o -std=c++11 zeckendorf`
+2. Compile the C++ file with `g++ zeckendorf.cpp -std=c++11 -o bin/zeckendorf`
 3. Run the executable with `./zeckendorf`
 4. Follow the prompts
 
