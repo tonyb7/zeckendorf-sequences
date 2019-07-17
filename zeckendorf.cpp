@@ -1,6 +1,5 @@
 // Zeckendorf thing for Annie Xu
 // It was really fun! - Tony Bai
-#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <unordered_set>
