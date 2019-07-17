@@ -11,7 +11,7 @@ Annie asked me to help her develop an algorithm to generate Simple Zeckendorf Se
 
 # How to Run This Program
 1. Download this repository and navigate to it in terminal
-2. Compile the C++ file with `g++ zeckendorf.cpp -o -std=c++11 zeckendorf`
+2. Compile the C++ file with `g++ zeckendorf.cpp -std=c++11 -o bin/zeckendorf`
 3. Run the executable with `./zeckendorf`
 4. Follow the prompts
 
@@ -19,11 +19,7 @@ Example:
 
 <img src="https://github.com/tonyb7/zeckendorf-sequences/blob/master/terminal_output.png?raw=true" width="600">
 
-The executable is included in this repository in case you don't want to/can't compile the C++ file and wanted to give running the executable compiled on my Mac a shot (skip steps 1-2 in this case).
-
 # Issues & Limitations
-If you want to generate bigger numbers and the ouput starts getting funky within the `printGrid` function, simply increase the parameter passed to `cout.width()`.
-
 It seems like the program can only execute reasonably fast (under 20 seconds) on my computer for up to about 23 rows as of now.
 
 # Extensions
