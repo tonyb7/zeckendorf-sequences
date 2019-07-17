@@ -90,7 +90,7 @@ pair<int, set<int>> findElementAt(const int i, const int j,
 		for (int y = 0; y < j; ++y) {
 			for (auto prev_path_sum : grid[x][y].second) {
 				pair.second.insert(pair.second.end(), pair.first + prev_path_sum);
-				forbidden_sums.insert(forbidden_sums.end(), pair.first + prev_path_sum);
+				forbidden_sums.insert(pair.first + prev_path_sum);
 			}
 		}
 	}
