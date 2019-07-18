@@ -18,9 +18,15 @@ int main() {
 	int y;
 	cout << "Enter y coordinate ";
 	cin >> y;
-
+	cout << "got here" << endl;
 	vector<vector<multiset<pair<int, int>>>> answer = prepareGrid(x, y);
+	cout << "got here too!" << endl;
+
+	cout << "Height " << answer.size() << " Width " << answer[0].size() << endl;
+	cout << "got here too!" << endl;
+
 	answer = generateGrid(answer, x, y);
+
 	printSet(answer[x][y]);
 
 	return 0;
@@ -30,11 +36,14 @@ int main() {
 vector<vector<multiset<pair<int, int>>>> prepareGrid(const int x, const int y) {
 	vector<vector<multiset<pair<int, int>>>> grid;
 	grid.reserve(x);
+	cout << "got here" << endl;
+
 	for (int i = 0; i < x; ++i) {
 		vector<multiset<pair<int, int>>> row;
 		row.reserve(y);
 		grid.push_back(row);
 	}
+	cout << "got here" << endl;
 
 	for (auto& row : grid) {
 		multiset<pair<int, int>> elt;
@@ -42,6 +51,7 @@ vector<vector<multiset<pair<int, int>>>> prepareGrid(const int x, const int y) {
 			row.push_back(elt);
 		}
 	}
+	cout << "got here" << endl;
 
 	return grid;
 }
@@ -71,20 +81,38 @@ void printSet(const multiset<pair<int, int>> elt) {
 
 // Generate the grid
 vector<vector<multiset<pair<int, int>>>> generateGrid(vector<vector<multiset<pair<int, int>>>> &grid, int x, int y) {
+	cout << "wooo 1" << endl;
 	for (int i = 0; i < x; ++i) {
-		pair<int, int> pair = { i, 0 };
-		grid[i][0].insert(pair);
-	}
+		cout << "wooo 2" << endl;
 
-	for (int j = 0; j < y; ++j) {
-		for (int k = 0; k < x; ++k) {
-			for (int l = 0; l < j; ++j) {
-				for (int m = 0; m < k; ++m) {
-					for (auto a_pair : grid[m][l]) {
-						pair<int, int> new_pair = { k - a_pair.first, j - a_pair.second };
-						grid[k][j].insert(new_pair);
+		for (int j = 0; j < y; ++j) {
+			cout << "wooo 3" << endl;
+
+			pair<int, int> a_pair = make_pair(i, j);
+			cout << "wooo 3.2" << endl;
+			cout << "i " << i << " J " << j << endl;
+			grid[i][j].insert(a_pair);
+			cout << "wooo 3.3" << endl;
+
+			for (int k = 0; k < i; ++k) {
+				cout << "wooo 4" << endl;
+
+				for (int l = 0; l < j; ++l) {
+					cout << "\twooo 5" << endl;
+
+					for (auto elt : grid[k][l]) {
+						cout << "\t\twooo 6" << endl;
+
+						a_pair = make_pair(i - k, j - l);
+						cout << "\t\twooo 6.2" << endl;
+
+						grid[i][j].insert(a_pair);
+						cout << "\t\twooo 6.3" << endl;
 					}
+					cout << "\t\t wooo 6.4" << endl;
 				}
+
+				cout << "\t wooo 5.2" << endl
 			}
 		}
 	}

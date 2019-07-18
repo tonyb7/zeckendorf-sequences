@@ -43,11 +43,24 @@ bool updateCache(Grid &grid, int x, int y) {
 // TODO: Bad contract?
 void fillGrid(Grid &grid) {
 	std::vector<std::vector<Displacements>>& the_grid = grid.getGrid(); 
-	for (int i = grid.getPrevHeight(); i < grid.getHeight(); ++i) {
-		Displacements displacements;
-		std::pair<int, int> pair = { i, 0 };
-		displacements.insert(pair);
-		the_grid[i][0] = displacements;
+	for (int i = 0; i < grid.getHeight(); ++i) {
+		for (int j = 0; j < grid.getWidth(); ++j) {
+			if (!the_grid[i][j].displacements.size()) {
+				if (i == 0 || j == 0) {
+					std::pair<int, int> a_pair = std::make_pair(i, j);
+					std::cout << "Adding " << i << ", " << j << std::endl;
+					the_grid[i][j].displacements.insert(a_pair);
+				} else {
+					for (int x = 0; x < i; ++x) {
+						for (int y = 0; y < j; ++y) {
+							std::pair<int, int> a_pair = std::make_pair(i - x, j - y);
+							std::cout << "Adding " << i - x << ", " << j - y << std::endl;
+							the_grid[i][j].displacements.insert(a_pair);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
