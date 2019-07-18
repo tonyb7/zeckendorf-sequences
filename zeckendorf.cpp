@@ -1,20 +1,38 @@
 // Zeckendorf thing for Annie Xu
 // It was really fun! - Tony Bai
-#include <iostream>
-#include <vector>
-#include <unordered_set>
-#include <set>
-#include <string>
-#include <utility>
 
-using namespace std;
+#include <algorithm>
+using std::lower_bound;
+
+#include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
+using std::left;
+
+#include <set>
+using std::set;
+
+#include <string>
+using std::stoi;
+
+#include <unordered_set>
+using std::unordered_set;
+
+#include <utility>
+using std::pair;
+
+#include <vector>
+using std::vector;
+
+//using namespace std;
 using row = vector<pair<int, set<int>>>;
 
 vector<row> prepareGrid(const int lim);
 void printGrid(const vector<row> &answer);
 vector<row> generateGrid(vector<row> & grid);
 pair<int, set<int>> findElementAt(const int i, const int j,
-	vector<row>  &grid, unordered_set<int> &forbidden_sums, int &prev_elt);
+	vector<row> &grid, unordered_set<int> &forbidden_sums, int &prev_elt);
 int find_smallest_unused_int(unordered_set<int> &forbidden_sums, const int prev_elt);
 
 int main(int argc, char **argv) {
@@ -77,7 +95,7 @@ vector<row> generateGrid(vector<row> &grid) {
 // Find element at position (i, j). Update forbidden sums. Returns pair, which contains the
 // number at position (i, j) and the new forbidden sums added from that position.
 pair<int, set<int>> findElementAt(const int i, const int j,
-		vector<row>  &grid, unordered_set<int> &forbidden_sums, int &prev_elt) {
+		vector<row> &grid, unordered_set<int> &forbidden_sums, int &prev_elt) {
 
 	pair<int, set<int>> pair = make_pair(0, set<int>());
 
@@ -99,9 +117,7 @@ pair<int, set<int>> findElementAt(const int i, const int j,
 }
 
 // Find the smallest int not in the forbidden_sums set. Start searching from prev_elt.
-int find_smallest_unused_int(unordered_set<int> &forbidden_sums, const int prev_elt) {
-	int index = prev_elt + 1;
-	while (forbidden_sums.count(index)) ++index;
-	return index;
+int find_smallest_unused_int(unordered_set<int> &forbidden_sums, int prev_elt) {
+	while (forbidden_sums.count(++prev_elt));
+	return prev_elt;
 }
-
